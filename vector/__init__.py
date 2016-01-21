@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+__version__ = '0.0.3'
+
 from math import sqrt
 
 
@@ -12,6 +16,9 @@ class Vector(object):
 
     def normalize(self):
         return self / self.magnitude()
+
+    def dot(self, other):
+        return sum(a * b for a, b in zip(self, other))
 
     def __len__(self):
         return len(self.coordinates)
@@ -43,8 +50,3 @@ class Vector(object):
 
     def __repr__(self):
         return str(self)
-
-
-if __name__ == "__main__":
-    v1 = Vector(-1, 1)
-    print v1.normalize(), v1.mag()
