@@ -2,7 +2,7 @@
 
 __version__ = '0.0.3'
 
-from math import sqrt
+from math import sqrt, acos, degrees
 
 
 class Vector(object):
@@ -11,14 +11,33 @@ class Vector(object):
         self.coordinates = coordinates
         self.index = 0
 
+    @property
+    def x(self):
+        return self.coordinates[0]
+
+    @property
+    def y(self):
+        return self.coordinates[1]
+
+    @property
+    def z(self):
+        return self.coordinates[2]
+
+    @property
     def magnitude(self):
         return abs(sqrt(sum(c ** 2 for c in self)))
 
     def normalize(self):
-        return self / self.magnitude()
+        return self / self.magnitude
 
     def dot(self, other):
         return sum(a * b for a, b in zip(self, other))
+
+    def angle_in_radians(self, other):
+        return acos(self.dot(other) / (self.magnitude * other.magnitude))
+
+    def angle(self, other):
+        return degrees(self.angle_in_radians(other))
 
     def __len__(self):
         return len(self.coordinates)
