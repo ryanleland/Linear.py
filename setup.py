@@ -2,14 +2,14 @@
 
 from setuptools import setup
 
-import vector
+import linear
 
 setup(
-    name="vector",
-    version=vector.__version__,
+    name="linear",
+    version=linear.__version__,
     url="https://github.com/ryanleland/Vector.py",
     packages = [
-        'vector'
+        'linear'
     ],
     package_data={'': ['LICENSE']},
     include_package_data=True,

@@ -21,7 +21,10 @@ class Vector(object):
 
     @property
     def z(self):
-        return self.coordinates[2]
+        if len(self) > 2:
+            return self.coordinates[2]
+        else:
+            return 0
 
     @property
     def magnitude(self):
