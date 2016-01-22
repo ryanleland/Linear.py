@@ -2,7 +2,7 @@
 
 __version__ = '0.0.3'
 
-from math import sqrt, acos, degrees
+from math import pi, sqrt, acos, degrees
 
 
 class Vector(object):
@@ -33,11 +33,29 @@ class Vector(object):
     def dot(self, other):
         return sum(a * b for a, b in zip(self, other))
 
+    def cross(self, other):
+        x = self.y * other.z - other.y * self.z
+        y = -(self.x * other.z - other.x * self.z)
+        z = self.x * other.y - other.x * self.y
+        return Vector(x, y, z)
+
     def angle_in_radians(self, other):
         return acos(self.dot(other) / (self.magnitude * other.magnitude))
 
     def angle(self, other):
         return degrees(self.angle_in_radians(other))
+
+    def is_orthogonal(self, other, tolerance=1e-10):
+        return abs(self.dot(other)) < tolerance
+
+    def is_parallel(self, other):
+        return (self.is_zero()
+            or other.is_zero()
+            or self.angle_in_radians(other) == 0
+            or self.angle_in_radians(other) == pi)
+
+    def is_zero(self, tolerance=1e-10):
+        return self.magnitude < tolerance
 
     def __len__(self):
         return len(self.coordinates)
@@ -47,6 +65,16 @@ class Vector(object):
 
     def __getitem__(self, index):
         return self.coordinates[index]
+
+    def __eq__(self, other):
+        if len(self) != len(other):
+            return False
+
+        for a, b in zip(self, other):
+            if a != b:
+                return False
+
+        return True
 
     def __add__(self, other):
         coordinates = (a + b for a, b in zip(self, other))
